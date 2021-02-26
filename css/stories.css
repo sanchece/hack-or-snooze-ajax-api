@@ -1,5 +1,4 @@
 /* Lists of stories */
-
 .stories-list {
   margin: 20px 5px;
 }
@@ -36,4 +35,9 @@
 
 .story-user {
   display: block;
+}
+
+button{
+color:red;
+height:1rem;
 }

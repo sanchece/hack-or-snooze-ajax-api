@@ -43,6 +43,9 @@ a:hover {
 .hidden {
   display: none;
 }
+.show{
+  display:flex;
+}
 
 
 /* Forms */

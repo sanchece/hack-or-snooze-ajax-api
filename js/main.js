@@ -14,6 +14,15 @@ const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 
+const $submit=$("#submit");
+const $storyForm=$("#new-story");
+const $addStory=$("#add-story");
+
+const $favoriteStories=$("#all-stories-list-favorites");
+const $navFav=$("#favorites");
+const $toFav=$("#to-fav");
+
+
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
  * calling this, individual components can re-show just what they want.

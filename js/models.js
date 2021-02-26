@@ -26,6 +26,7 @@ class Story {
 		// UNIMPLEMENTED: complete this function!
 		return 'hostname.com';
 	}
+  
 }
 
 /******************************************************************************
@@ -66,22 +67,27 @@ class StoryList {
    *
    * Returns the new Story instance
    */
-	// UNIMPLEMENTED: complete this function!
+
   async addStory(user, { title, author, url }) {
   // UNIMPLEMENTED: complete this function!
+  console.log("before")
+    const response =await axios.post(`${BASE_URL}/stories`,  
+     { 
+       token: user.loginToken, 
+       story: {title, author, url}
+     }   
+   );
+    console.log(response);
 
-    const response = await axios.post(`${BASE_URL}/stories`,  
-      { 
-        token: user.loginToken, 
-        story: {title, author, url}
-      }   
-    );
+    let newStory = new Story(response.data.story);
 
-    let newStory = new Story({ title, author, url });
+
     this.stories.push(newStory);
     user.ownStories.push(newStory);
-    return  newStory;
+     return newStory;
+    
   }
+
 
 }
 
@@ -94,20 +100,16 @@ class User {
    *   - {username, name, createdAt, favorites[], ownStories[]}
    *   - token
    */
-
 	constructor({ username, name, createdAt, favorites = [], ownStories = [] }, token) {
 		this.username = username;
 		this.name = name;
 		this.createdAt = createdAt;
-
 		// instantiate Story instances for the user's favorites and ownStories
 		this.favorites = favorites.map((s) => new Story(s));
 		this.ownStories = ownStories.map((s) => new Story(s));
-
 		// store the login token on the user so it's easy to find for API calls.
 		this.loginToken = token;
 	}
-
 	/** Register new user in API, make User instance & return it.
    *
    * - username: a new username
@@ -160,7 +162,6 @@ let { user } = response.data;
 			response.data.token
 		);
 	}
-
 	/** When we already have credentials (token & username) for a user,
    *   we can log them in automatically. This function does that.
    */
@@ -190,4 +191,23 @@ let { user } = response.data;
 			return null;
 		}
 	}
+ 
+   async addFavorite(favStory){
+    const response= await axios.post(`${BASE_URL}/users/${this.username}/favorites/${favStory.storyId}`,
+    {token:this.loginToken});    
+   
+    this.favorites.push(favStory);
+ 
+  }
+  async remFavorite(favStory){
+    const response= await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${favStory.storyId}`,
+    {token:this.loginToken}); 
+    this.favorites.remove(favStory);  
+
+  }
+
+
 }
+
+
+
