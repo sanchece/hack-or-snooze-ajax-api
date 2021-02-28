@@ -18,9 +18,14 @@ const $submit=$("#submit");
 const $storyForm=$("#new-story");
 const $addStory=$("#add-story");
 
+
 const $favoriteStories=$("#all-stories-list-favorites");
 const $navFav=$("#favorites");
 const $toFav=$("#to-fav");
+
+const $myStories=$('#all-stories-list-myStories');
+const $myStoriesButton=$('#my-stories');
+ const $remStoryButton=$("#to-remove");
 
 
 /** To make it easier for individual components to show just themselves, this

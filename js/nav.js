@@ -37,7 +37,12 @@ function updateNavOnLogin() {
 
 function navSubmit(evt){
   console.debug("navSubmitForm",evt);
-  $storyForm.removeClass("hidden").addClass("show");
+
+  // $storyForm.toggleClass("hidden");
+  $storyForm.show();
+  $allStoriesList.hide();
+  $myStories.hide();
+  $favoriteStories.hide();
 
 }
 
@@ -47,8 +52,26 @@ $submit.on("click",navSubmit);
 function navFavorites(evt){
   console.debug("navFavorites",evt);
   $allStoriesList.hide();
+  $myStories.hide();
+  $storyForm.hide();
+
+  $favoriteStories.show();
   // $favoriteStories.removeClass("hidden").addClass("show");
   putFavStoriesOnPage();
+
 }
 
 $navFav.on("click",navFavorites);
+
+function navMyStories(evt){
+  console.debug("navMyStories",evt);
+  $allStoriesList.hide();
+  $favoriteStories.hide();
+  $storyForm.hide();
+  $myStories.show();
+
+  // $favoriteStories.removeClass("hidden").addClass("show");
+  putMyStoriesOnPage();
+}
+
+$myStoriesButton.on("click",navMyStories);
