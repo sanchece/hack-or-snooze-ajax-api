@@ -19,16 +19,20 @@ async function login(evt) {
 
   // User.login retrieves user info from API and returns User instance
   // which we'll make the globally-available, logged-in user.
+  try{
   currentUser = await User.login(username, password);
-
-  $loginForm.trigger("reset");
-
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
+  
+  }
+  catch{
+    $loginForm.trigger("reset");
+    $loginError.text("Your password or username is incorrect");
+  }
+  $loginForm.trigger("reset");
+  location.reload();
 }
-
 $loginForm.on("submit", login);
-
 /** Handle signup form submission. */
 
 async function signup(evt) {
@@ -41,16 +45,24 @@ async function signup(evt) {
 
   // User.signup retrieves user info from API and returns User instance
   // which we'll make the globally-available, logged-in user.
+  try{
   currentUser = await User.signup(username, password, name);
-
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
-
   $signupForm.trigger("reset");
+  }
+  catch(err){
+    $signupError.text("This username has already been taken, please try a different username");
+  }
+  location.reload();
 }
 
+try{
 $signupForm.on("submit", signup);
-
+}
+catch(err){
+  console.log(err.message, "catching sign up error")
+}
 /** Handle click of logout button
  *
  * Remove their credentials from localStorage and refresh page
@@ -77,7 +89,6 @@ async function checkForRememberedUser() {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
   if (!token || !username) return false;
-
   // try to log in with these credentials (will be null if login failed)
   currentUser = await User.loginViaStoredCredentials(token, username);
 }
@@ -109,8 +120,6 @@ function saveUserCredentialsInLocalStorage() {
 
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
-
-  $allStoriesList.show();
-
+  $allStoriesList.show(); 
   updateNavOnLogin();
 }

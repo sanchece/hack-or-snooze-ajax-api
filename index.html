@@ -64,6 +64,11 @@
   <ol id="all-stories-list" class="stories-list"></ol>
   <ol id="all-stories-list-favorites" class="stories-list hidden"></ol>
   <ol id="all-stories-list-myStories" class="stories-list hidden"></ol>
+  <div id="profile" class="hidden">
+    <label for="username">Username: </label><span id="username"></span></br>
+    <label for="name">Name: </label><span id="name"></span></br>
+    <label for="date">Date Account was created: </label><span id="date"></span></br>
+  </div>
 
 </section>
 
@@ -82,6 +87,7 @@
       <input id="login-password" type="password" autocomplete="current-password">
     </div>
     <button type="submit">login</button>
+    <div id="login-error"></div>
     <hr>
   </form>
 
@@ -105,6 +111,7 @@
       <input id="signup-password" autocomplete="new-password" type="password">
     </div>
     <button type="submit">create account</button>
+    <div id="signup-error"></div>
   </form>
 </section>
 

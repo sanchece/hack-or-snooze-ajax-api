@@ -23,8 +23,8 @@ class Story {
 	/** Parses hostname out of URL and returns it. */
 
 	getHostName() {
-		// UNIMPLEMENTED: complete this function!
-		return 'hostname.com';
+	let hostname = this.url.split("://")[1].split("/")[0];
+		return hostname;
 	}
   
 }
@@ -44,13 +44,7 @@ class StoryList {
    *  - makes a single StoryList instance out of that
    *  - returns the StoryList instance.
    */
-
 	static async getStories() {
-		// Note presence of `static` keyword: this indicates that getStories is
-		//  **not** an instance method. Rather, it is a method that is called on the
-		//  class directly. Why doesn't it make sense for getStories to be an
-		//  instance method?
-
 		// query the /stories endpoint (no auth required)
 		const response = await axios({
 			url: `${BASE_URL}/stories`,
@@ -64,28 +58,19 @@ class StoryList {
 	/** Adds story data to API, makes a Story instance, adds it to story list.
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
-   *
    * Returns the new Story instance
    */
-
   async addStory(user, { title, author, url }) {
-  // UNIMPLEMENTED: complete this function!
-  console.log("before")
     const response =await axios.post(`${BASE_URL}/stories`,  
      { 
        token: user.loginToken, 
        story: {title, author, url}
      }   
    );
-    // console.log(response);
-
     let newStory = new Story(response.data.story);
-
-
     this.stories.push(newStory);
     user.ownStories.push(newStory);
-     return newStory;
-    
+    return newStory;    
   }
 
 
@@ -195,11 +180,7 @@ let { user } = response.data;
    async addFavorite(favStory){
     const response= await axios.post(`${BASE_URL}/users/${this.username}/favorites/${favStory.storyId}`,
     {token:this.loginToken});    
-   
     this.favorites.push(favStory);
-	// console.log("this.favorites:", this.favorites);
-
- 
   }
   async remFavorite(favStory){
     const response=    await axios({
@@ -207,14 +188,10 @@ let { user } = response.data;
 		method: "DELETE",
 		data: { token:`${this.loginToken}`}
 	});
-
 	this.favorites=this.favorites.filter(story=>story.storyId!==favStory.storyId);
-	// console.log(favStory.storyId, story.storyId)
-	// console.log("this.favorites:", this.favorites);    
-  }
+   }
 
    async removeStory(myStory){
-	   console.log(myStory)
  	 const response=    await axios({
  	 	url: `${BASE_URL}/stories/${myStory.storyId}`,
  	 	method: "DELETE",
@@ -222,11 +199,8 @@ let { user } = response.data;
 	title:myStory.title}
  	 });
 
-	  console.log("under server call model")
  	 this.ownStories=this.ownStories.filter(story=>story.storyId!==myStory.storyId);
-	
-   }
-
+	   }
 }
 
 
